@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    stdin_open: true      # else react exits with exit 0
+    build:
+      context: . # location of the docker file , in this case the current working directory.
+      dockerfile: Dockerfile.dev #name of the docker file to be used.
+    ports: 
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm","run","test"]
